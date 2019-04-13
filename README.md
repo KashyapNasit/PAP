@@ -2,10 +2,14 @@
 
 #Project Allotment Portal for MNNIT
 
-Users are : Normal Users and Leader users
+Users are : 
+Normal Users and Leader users
 Leader is decided by cpi and assigned slot 1.
+
 Leader can send request via a dynamic changing portal to fellow normal users.
+
 Leader can fill the preference of professors dynamically.
+
 Normal users can accept requests of leader and if leader request is already accepted by someone of same slot then it throws an error.
 
 
