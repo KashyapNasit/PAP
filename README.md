@@ -14,8 +14,8 @@ Normal users can accept requests of leader and if leader request is already acce
 
 
 #Admin:
-Admin can be created by terminal or by script provided.
-Admin can upload data of students and professor via a csv file ,after that user tables get automatically created accordingly.
+To create a admin user, execute "from administrator import create_database" in django shell and follow the instruction.
+Admin can upload data of students and professor via a csv file(sample file is given) ,after that user tables get automatically created accordingly.
 Algorithms for assigning mentors ,random group allotment etc. has been effectively implemented.
 
 
