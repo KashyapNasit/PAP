@@ -9,7 +9,7 @@ from .models import Professor
 
 @login_required
 def professors_list_view(request):
-    queryset = User.objects.all()  # list of objects
+    queryset = request.user.profile.batch.professor.all()  # list of objects
     context = {
         "object_list": queryset
     }

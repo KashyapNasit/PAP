@@ -43,10 +43,12 @@
             {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}">logout</a></li>
                 <li class="selected"><a href=" 'group/'">Group</a></li>
+                <li><a href="professors/">View registered Professor's</a></li>
+                {% if user.teamformation.slot_no == 1 %}
+                <li><a href="professors/priority/">Fill Professor Priority</a></li>
+                    {% endif %}
             {% else %}
               <li><a href="{% url 'login' %}">login</a></li>
-              <li><a href="another_page.html">Another Page</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
 {#                <li class="selected"><a href="./group">Group</a></li>#}
              {% endif %}
         </ul>

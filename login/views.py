@@ -104,6 +104,7 @@ def site_home(request):
     return render(request, 'site_home.html')
 
 
+@login_required()
 def group(request):
     idd = request.user.teamformation.group
     if idd is None:

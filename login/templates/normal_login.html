@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <h1>Hello normal1</h1>
   <h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
     <p>You are in slot no : {{ user.teamformation.slot_no }}</p>
@@ -25,21 +26,4 @@
 
             {% endfor %}
         </table>
-
-
-
-
-        <p>{{ k.first_name }}  {{ k.last_name }}</p>
-{#        <a href='send/{{ k.teamformation.group_id }}'>Select</a>#}
-        <form method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <fieldset class="form-group">
-                                {{ form }}
-                            </fieldset>
-                            {{ k.ID }}
-                            <button type="submit" name={{ k.teamformation.group_id }} value={{ k.teamformation.group_id }}>Add</button>
-                    </form>
-
-
-   <h1>{{ string.1 }}</h1>
 {% endblock %}
