@@ -14,7 +14,7 @@ class Admin(models.Model):
 class Batch(models.Model):
     ID = models.AutoField(primary_key=True)
     batch_name = models.CharField(max_length=256, unique=True)
-    cutoff_cpi = models.FloatField(null=True, blank=True)
+    cutoff_cpi = models.FloatField(default=0, blank=True)
     number_of_groups = models.SmallIntegerField()
     is_team_formation_allowed = models.BooleanField(default=False)
     is_preference_filling_allowed = models.BooleanField(default=False)

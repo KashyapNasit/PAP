@@ -5,4 +5,4 @@ from . models import Batch
 class AddBatchForm(ModelForm):
     class Meta:
         model = Batch
-        fields = ['batch_name', 'cutoff_cpi', 'number_of_groups']
+        fields = ['batch_name', 'number_of_groups']
