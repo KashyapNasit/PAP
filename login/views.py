@@ -80,6 +80,7 @@ def home(request):
 def site_home(request):
     return render(request,'site_home.html')
 
+@login_required()
 def group(request):
     idd =  request.user.teamformation.group_id
     usrall=User.objects.filter(teamformation__group_id__exact= idd)

@@ -22,11 +22,10 @@ from administrator import views as admin_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', core_views.site_home),
+    path('', core_views.home),
     path('home/', core_views.home, name='home'),
     url(r'^login/', include('login.urls')),
     path('professors/', include('professor.urls')),
     path('administrator/', include('administrator.urls')),
     url('group/',core_views.group),
-
 ]

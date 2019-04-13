@@ -2,10 +2,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Hello normal1</h1>
-  <h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
-  <p>Your email address: {{ user.teamformation.group_id }}   {{ user.tier }}</p>
-    {{ all }}
+    <h1>Hello Student</h1>
+  <h2>Welcome, {{ user.get_full_name }} <small> Username:{{ user.username }}</small></h2>
+  <p>Your group id is: {{ user.teamformation.group_id }}</p>
+    <h2>Below are pending requests from leader. Fill them fast as they may expire. </h2>
     {% for k in all %}
         <p>{{ k.first_name }}  {{ k.last_name }}</p>
 {#        <a href='send/{{ k.teamformation.group_id }}'>Select</a>#}
