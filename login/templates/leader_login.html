@@ -4,20 +4,40 @@
 {% block content %}
     <h1>Hello leader</h1>
   <h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
-  <p>Your email address: {{ user.teamformation.group_id}}   {{ user.tier }}</p>
+  <p>Your email address: {{ user.email}}</p>
+        {% for x in range%}
+            {% if x >  1 %}
+                <h2>Slot {{ x }}</h2>
+                    <table>
+                        <tr>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Send request</th>
+                        </tr>
+                        {% for k in all %}
+                            {% if k.teamformation.slot_no == x %}
+                                <tr>
+                                    <td>{{ k.username }}</td>
+                                    <td>{{ k.first_name }} {{ k.last_name }}</td>
+                                    <td>
+                                        <form method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                '{{ k.id }}'
+                                                {% if '{{ k.id }}' in sent_requests %}
+                                                    <button type="submit" name={{ k.id }} value={{ k.id}} disabled>Sent '{{ k.id }}'</button>
+                                                {% else %}
+                                                     <button type="submit" name={{ k.id }} value={{ k.id}}>Add </button>
+                                                {% endif %}
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </table>
 
-    {% for k in all %}
-        <p>{{ k.first_name }}  {{ k.last_name }}</p>
-        <p>{{ k.username}}</p>
-            {{ k.id }}
-         <form method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <fieldset class="form-group">
-                                {{ form }}
-                            </fieldset>
-                            {{ k.ID }}
-                            <button type="submit" name={{ k.id }} value={{ k.id}}>Add</button>
-                    </form>
 
-    {% endfor %}
+
+            {% endif %}
+        {% endfor %}
+
 {% endblock %}

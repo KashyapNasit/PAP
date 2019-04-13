@@ -22,6 +22,7 @@ class Batch(models.Model):
     is_mentor_allotted = models.BooleanField(default=False)
     professor = models.ManyToManyField(Professor)
     admin = models.ForeignKey(Admin, on_delete=models.SET_NULL, null=True)
+    number_of_slots = models.SmallIntegerField(null=True)
 
 
 @receiver(post_save, sender=User)

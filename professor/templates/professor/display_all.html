@@ -3,10 +3,22 @@
 {% block content %}
 
 
+<h2>List of available Professors:</h2>
+    <table>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>Area of Interest</th>
+        </tr>
+        {% for instance in object_list %}
+            <tr>
+                <td>{{ instance.first_name }} {{ instance.last_name }}</td>
+                <td>{{ instance.area_of_interest }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 
-{% for instance in object_list %}
-     <p>{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }}</a></p>
-{% endfor %}
 
 
 {% endblock %}

@@ -9,7 +9,7 @@ class TeamFormation(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slot_no = models.IntegerField(null=True)
     group = models.ForeignKey(Group, null=True, on_delete=models.CharField)
-    requests = models.CharField(null=True, max_length=256)  # Coma separated list of GroupID
+    requests = models.CharField(default=",", max_length=256)  # Coma separated list of GroupID
 
 
 @receiver(post_save, sender=User)

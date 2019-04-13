@@ -1,19 +1,20 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .forms import ProfessorForm,proffform
+from .forms import ProfessorForm
 from .models import Professor
-from allotment.models import Group
-from django import forms
+
+
 # Create your views here.
 
 @login_required
 def professors_list_view(request):
-    queryset = User.objects.all() # list of objects
+    queryset = request.user.profile.batch.professor.all()  # list of objects
     context = {
         "object_list": queryset
     }
     return render(request, "professor/display_all.html", context)
+
 
 @login_required
 def professor_create_view(request):
@@ -26,6 +27,7 @@ def professor_create_view(request):
     }
     return render(request, "professor/create.html", context)
 
+
 @login_required
 def professor_priority(request):
     proffs = Professor.objects.all()
@@ -33,7 +35,7 @@ def professor_priority(request):
 
     for u in proffs:
         print(request.GET.get(u.ID))
-        if request.GET.get(str(u.ID)+"_add"):
+        if request.GET.get(str(u.ID) + "_add"):
             if gid.preference_of_professor.find(str(u.ID)):
                 print(u.ID)
                 print("Hello")
@@ -43,16 +45,15 @@ def professor_priority(request):
                 gid.preference_of_professor = gid.preference_of_professor + str(u.ID) + ","
                 gid.save()
 
-        if (request.GET.get(str(u.ID)+"_remove")):
+        if request.GET.get(str(u.ID) + "_remove"):
             print("clicked remove")
             if gid.preference_of_professor.find(str(u.ID)):
                 print("***")
-                gid.preference_of_professor = gid.preference_of_professor.replace(","+str(u.ID) + ",", ",")
+                gid.preference_of_professor = gid.preference_of_professor.replace("," + str(u.ID) + ",", ",")
                 gid.save()
 
-
     context = {
-            'proffs': proffs,
-            'preference':gid.preference_of_professor
-        }
+        'proffs': proffs,
+        'preference': gid.preference_of_professor
+    }
     return render(request, "proff_priority.html", context)

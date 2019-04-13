@@ -17,3 +17,6 @@ def slot_allotment(batch):
             j = j+1
             s.user.teamformation.group = group
         s.user.teamformation.save()
+    batch.number_of_slots = n
+    batch.save()
+
