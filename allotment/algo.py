@@ -20,13 +20,13 @@ def allot_random_group(student_profile, batch):
 
 
 def find_professor(id, batch):
-    id = int(id, 10)
-    professors = batch.professor.all()
+    if id != '':
+        id = int(id, 10)
+        professors = batch.professor.all()
 
-    for p in professors:
-        if p.ID == id:
-            return p
-
+        for p in professors:
+            if p.ID == id:
+                return p
     return None
 
 
@@ -51,7 +51,7 @@ def allot_mentor(batch):
 
         for g in groups:
             preference = g.preference_of_professor
-            if preference is None:
+            if preference is ',':
                 preference_not_filled.append(g)
                 continue
 

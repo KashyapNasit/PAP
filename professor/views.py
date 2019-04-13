@@ -32,12 +32,15 @@ def professor_create_view(request):
 def professor_priority(request):
     if request.user.teamformation.slot_no == 1:
         proffs = request.user.profile.batch.professor.all()
+        # print(proffs)
         gid = request.user.teamformation.group
-        print(gid)
+        # print(gid)
         for u in proffs:
-            print(request.GET.get(u.ID))
+            # print(request.GET.get(u.ID))
+            print(str(u.ID) + "_add")
             if request.GET.get(str(u.ID) + "_add"):
-                if gid.preference_of_professor.find(str(u.ID)):
+                print(gid.preference_of_professor)
+                if not gid.preference_of_professor.find(str(u.ID)):
                     print(u.ID)
                     print("Hello")
                 else:
@@ -46,14 +49,16 @@ def professor_priority(request):
                     gid.preference_of_professor = gid.preference_of_professor + str(u.ID) + ","
                     print(gid.preference_of_professor)
                     gid.save()
+                    print(gid.preference_of_professor)
 
-            if request.GET.get(str(u.ID) + "_remove"):
+            elif request.GET.get(str(u.ID) + "_remove"):
                 print("clicked remove")
                 if gid.preference_of_professor.find(str(u.ID)):
                     print("***")
                     gid.preference_of_professor = gid.preference_of_professor.replace("," + str(u.ID) + ",", ",")
                     print(gid.preference_of_professor)
                     gid.save()
+                    print(gid.preference_of_professor)
 
         context = {
             'proffs': proffs,
