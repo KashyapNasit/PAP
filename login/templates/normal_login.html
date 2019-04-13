@@ -4,9 +4,31 @@
 {% block content %}
     <h1>Hello normal1</h1>
   <h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
-  <p>Your email address: {{ user.teamformation.group_id }}   {{ user.tier }}</p>
-    {{ all }}
-    {% for k in all %}
+    <p>You are in slot no : {{ user.teamformation.slot_no }}</p>
+  <p>Your email address: {{ user.email }}</p>
+    <p>Pending requests:</p>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Accept</th>
+                <th>Reject</th>
+            </tr>
+            {% for k in all %}
+                <th>{{ k.username }}</th>
+                <th>{{ k.first_name }} {{ k.last_name }}</th>
+                <th>
+
+                </th>
+
+
+
+            {% endfor %}
+        </table>
+
+
+
+
         <p>{{ k.first_name }}  {{ k.last_name }}</p>
 {#        <a href='send/{{ k.teamformation.group_id }}'>Select</a>#}
         <form method="POST" enctype="multipart/form-data">
@@ -17,7 +39,7 @@
                             {{ k.ID }}
                             <button type="submit" name={{ k.teamformation.group_id }} value={{ k.teamformation.group_id }}>Add</button>
                     </form>
-    {% endfor %}
+
 
    <h1>{{ string.1 }}</h1>
 {% endblock %}
