@@ -1,6 +1,7 @@
 # PAP
 
 #Project Allotment Portal for MNNIT
+
 Users are : Normal Users and Leader users
 Leader is decided by cpi and assigned slot 1.
 Leader can send request via a dynamic changing portal to fellow normal users.
