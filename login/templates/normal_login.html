@@ -16,14 +16,26 @@
                 <th>Reject</th>
             </tr>
             {% for k in all %}
-                <th>{{ k.username }}</th>
-                <th>{{ k.first_name }} {{ k.last_name }}</th>
-                <th>
+                <tr>
+                    <td>{{ k.username }}</td>
+                    <td>{{ k.first_name }} {{ k.last_name }}</td>
+                    <td>
+                        <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ k.ID }}
+                                <button type="submit" name='{{ k.teamformation.group_id }}_accept' value={{ k.teamformation.group_id }}>Accept</button>
+                        </form>
 
-                </th>
+                    </td>
+                    <td>
+                        <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ k.ID }}
+                                <button type="submit" name='{{ k.teamformation.group_id }}_reject' value={{ k.teamformation.group_id }}>Reject</button>
+                        </form>
 
-
-
+                    </td>
+                </tr>
             {% endfor %}
         </table>
 {% endblock %}

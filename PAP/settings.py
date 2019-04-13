@@ -128,6 +128,6 @@ STATIC_URL = '/login/static/'
 STATICFILE_DIRS = [
     "/templates/style",
 ]
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login'

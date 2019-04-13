@@ -22,7 +22,6 @@
                                     <td>
                                         <form method="POST" enctype="multipart/form-data">
                                                 {% csrf_token %}
-                                                '{{ k.id }}'
                                                 {% if '{{ k.id }}' in sent_requests %}
                                                     <button type="submit" name={{ k.id }} value={{ k.id}} disabled>Sent '{{ k.id }}'</button>
                                                 {% else %}

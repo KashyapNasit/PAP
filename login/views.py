@@ -29,15 +29,18 @@ def home(request):
         if request.user.is_staff:
             return redirect('/administrator/')
         elif request.user.teamformation.slot_no != 1:
-            if request.user.teamformation.group is None:
-                users = User.objects.filter(teamformation__slot_no__exact=1)
+            if (request.user.teamformation.group is None) and request.user.profile.batch.is_team_formation_allowed:
+                print(request.user.profile.batch.is_team_formation_allowed)
+                users = User.objects.filter(teamformation__slot_no__exact=1)  # Come bake here and fix this.....non leader ke page pe sare log dikh rahe hai naki jisne request bheji ho
                 for u in users:
                     print(u.teamformation.group_id)
-                    if request.POST.get(str(u.teamformation.group_id)):
+                    if request.POST.get(str(u.teamformation.group_id)+'_accept'):
                         std = User.objects.filter(id=u.id)
                         std = std[0]
                         print(std.teamformation.group_id)
                         if is_sloter_present(request.user.teamformation.slot_no, u.teamformation.group):
+                            request.user.teamformation.requests.replace(','+str(u.teamformation.group)+',', ',')
+                            request.user.teamformation.save()
                             return render(request,'sloter_present.html')
                         else:
                             request.user.teamformation.group_id = u.teamformation.group_id
@@ -45,13 +48,16 @@ def home(request):
                             request.user.teamformation.save()
                             stri = request.user.teamformation.requests
                             stri2 = stri.split(',')
-                            users = User.objects.filter(teamformation__slot_no__exact=-1)
-                            context = {
-                                "string": stri2,
-                                "all": users
-                                # "length": g
-                            }
-                            return render(request, 'normal_login.html', context)
+                            # users = User.objects.filter(teamformation__slot_no__exact=1)
+                            user = []
+                            return render(request, 'normal_login.html')
+
+                    elif request.POST.get(str(u.teamformation.group_id)+'_reject'):
+                        request.user.teamformation.requests.replace(',' + str(u.teamformation.group.group_id) + ',', ',')
+                        request.user.teamformation.save()
+                        print("reject : ", u.teamformation.group_id,request.user.teamformation.requests )
+
+
                 stri = request.user.teamformation.requests
                 stri2 = stri.split(',')
                 context = {
@@ -63,38 +69,41 @@ def home(request):
             else:
                 return render(request, 'normal_login.html')
         else:
-            users = User.objects.filter(teamformation__slot_no__gt=1)
-            number_of_slots = request.user.profile.batch.number_of_slots
-            available_users = []
+            if request.user.profile.batch.is_team_formation_allowed:
+                users = User.objects.filter(teamformation__slot_no__gt=1)
+                number_of_slots = request.user.profile.batch.number_of_slots
+                available_users = []
 
-            for u in users:
-                print(u.id)
-                if request.POST.get(str(u.id)):
-                    std = User.objects.filter(id=u.id)
-                    std = std[0]
-                    print(std.teamformation.requests)
-                    std.teamformation.requests = std.teamformation.requests + str(request.user.teamformation.group_id) +','
-                    request.user.teamformation.requests = request.user.teamformation.requests + str(std.id) + ','
-                    request.user.teamformation.save()
-                    std.teamformation.save()
-                if u.teamformation.group is None:
-                    available_users.append(u)
+                for u in users:
+                    print(u.id)
+                    if request.POST.get(str(u.id)):
+                        std = User.objects.filter(id=u.id)
+                        std = std[0]
+                        print(std.teamformation.requests)
+                        std.teamformation.requests = std.teamformation.requests + str(request.user.teamformation.group_id) +','
+                        request.user.teamformation.requests = request.user.teamformation.requests + str(std.id) + ','
+                        request.user.teamformation.save()
+                        std.teamformation.save()
+                    if u.teamformation.group is None:
+                        available_users.append(u)
 
-            sent_requests = request.user.teamformation.requests.split(',')
-            print("Hello", sent_requests)
+                sent_requests = request.user.teamformation.requests.split(',')
+                print("Hello", sent_requests)
 
-            aaa = []
+                aaa = []
 
-            for u in available_users:
-                if not str(u.id) in sent_requests:
-                    aaa.append(u)
-            print(aaa,available_users)
-            context = {
-                "all": aaa,
-                "range": range(number_of_slots+1),
-                "sent_requests": sent_requests,
-            }
-            return render(request, 'leader_login.html', context)
+                for u in available_users:
+                    if not str(u.id) in sent_requests:
+                        aaa.append(u)
+                print(aaa,available_users)
+                context = {
+                    "all": aaa,
+                    "range": range(number_of_slots+1),
+                    "sent_requests": sent_requests,
+                }
+                return render(request, 'leader_login.html', context)
+            else:
+                return render(request, 'leader_login.html')
     # else:
     #     return render(request, 'group.html')
     # return render(request, 'home.html')

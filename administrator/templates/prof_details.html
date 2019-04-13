@@ -3,10 +3,15 @@
 {% load static %}
 
 {% block content %}
+
     <table style="width:100%">
       <tr>
         <th>Name:</th>
         <td>{{ prof.first_name }} {{ prof.last_name }}</td>
+      </tr>
+      <tr>
+          <th>Max groups: </th>
+          <td>{{ prof.max_group }}</td>
       </tr>
       <tr>
         <th>Area of interests:</th>
@@ -31,9 +36,11 @@
                     <td>{{ t.user.profile.cpi }}</td>
                     <td>{{ t.slot_no }}</td>
                 </tr>
+                </table>
             {% endfor %}
     {% endfor %}
     </tr>
     </table>
+    <a href="{% url 'admin_home' %}"><button class="button">Go back</button></a>
 
 {% endblock %}

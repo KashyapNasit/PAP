@@ -3,8 +3,19 @@
 {% load static %}
 
 {% block content %}
-    <a href="{% url 'add-batch' %}"><button formaction={% url 'add-batch' %}>Add Batch</button></a>
+    <a href="{% url 'add-batch' %}"><button class="button">Add Batch</button></a>
+    <h5>*CutOff CPI not implemented</h5>
     <table style="width:50%" align="center">
+        <tr>
+            <th>Batch unique ID</th>
+            <th>Batch Name</th>
+            <th>Cut off CPI </th>
+            <th>Number of Groups</th>
+            <th>Is preference filling allowed?</th>
+            <th>Is team formation allowed?</th>
+            <th>Professors</th>
+            <th>Group option</th>
+        </tr>
         {% for b in batch %}
         <tr>
             <th>{{ b.ID }}</th>
@@ -33,9 +44,6 @@
                 <th>
                     <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <fieldset class="form-group">
-                                {{ form }}
-                            </fieldset>
                             <input type="file" name="prof-data">
                             <button type="submit" name={{ b.ID }} value={{ b.batch_name }}>Add</button>
                     </form>
