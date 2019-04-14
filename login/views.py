@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from . forms import SignUpForm
 from django.contrib.auth.models import User
+from allotment.models import Group
 
 
 def signup(request):
@@ -32,12 +33,21 @@ def home(request):
             if (request.user.teamformation.group is None) and request.user.profile.batch.is_team_formation_allowed:
                 print(request.user.profile.batch.is_team_formation_allowed)
                 users = User.objects.filter(teamformation__slot_no__exact=1)  # Come bake here and fix this.....non leader ke page pe sare log dikh rahe hai naki jisne request bheji ho
+                groups = request.user.profile.batch.group_set.all()
+                str0 = request.user.teamformation.requests
+                str0 = str0.split(',')
+                grps = []
+                for g in groups:
+                    if str(g.group_id) in str0:
+                        grps.append(g)
+
+                print(grps)
                 for u in users:
-                    print(u.teamformation.group_id)
+                    #print(u.teamformation.group_id)
                     if request.POST.get(str(u.teamformation.group_id)+'_accept'):
                         std = User.objects.filter(id=u.id)
                         std = std[0]
-                        print(std.teamformation.group_id)
+                        #print(std.teamformation.group_id)
                         if is_sloter_present(request.user.teamformation.slot_no, u.teamformation.group):
                             request.user.teamformation.requests.replace(','+str(u.teamformation.group)+',', ',')
                             request.user.teamformation.save()
@@ -46,23 +56,20 @@ def home(request):
                             request.user.teamformation.group_id = u.teamformation.group_id
                             request.user.teamformation.requests = ""
                             request.user.teamformation.save()
-                            stri = request.user.teamformation.requests
-                            stri2 = stri.split(',')
-                            # users = User.objects.filter(teamformation__slot_no__exact=1)
-                            user = []
+                            print(request.user.teamformation.requests)
                             return render(request, 'normal_login.html')
 
                     elif request.POST.get(str(u.teamformation.group_id)+'_reject'):
                         request.user.teamformation.requests.replace(',' + str(u.teamformation.group.group_id) + ',', ',')
                         request.user.teamformation.save()
-                        print("reject : ", u.teamformation.group_id,request.user.teamformation.requests )
+                        #print("reject : ", u.teamformation.group_id,request.user.teamformation.requests )
 
 
                 stri = request.user.teamformation.requests
                 stri2 = stri.split(',')
                 context = {
                     "string": stri2,
-                    "all": users
+                    "all": grps
                     # "length": g
                 }
                 return render(request, 'normal_login.html', context)
