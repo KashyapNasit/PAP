@@ -34,7 +34,7 @@ Seperate page for group and professor data.
 ## To run PAP:
 To install the dependencies run the following command:
 ```bash
-pip -r requirement.txt
+pip install -r requirement.txt
 ```
 and then to run the project
 
