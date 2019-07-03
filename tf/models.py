@@ -17,3 +17,4 @@ def update_user_teamformation(sender, instance, created, **kwargs):
     if created and (instance.is_staff != True):
         TeamFormation.objects.create(user=instance)
         instance.teamformation.save()
+

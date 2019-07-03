@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', core_views.home, name="home"),
     url(r'^login/', include('login.urls')),
-    path('professors/', include('professor.urls')),
+    path('professors/', include('professor.urls'),  name="prof"),
     path('administrator/', include('administrator.urls')),
     url(r'group/',core_views.group),
 
